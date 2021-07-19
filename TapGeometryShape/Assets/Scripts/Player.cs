@@ -47,6 +47,8 @@ public class Player : MonoBehaviour
         if (_shape == obstacle.Shape)
         {
             StartCoroutine(ChangeColorOnHitObstacle(Color.green));
+
+            Score.IncreaseScore();
         }
         else
         {
