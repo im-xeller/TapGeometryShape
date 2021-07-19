@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -48,7 +47,6 @@ public class Player : MonoBehaviour
         if (_shape == obstacle.Shape)
         {
             StartCoroutine(ChangeColorOnHitObstacle(Color.green));
-            StartCoroutine(ChangeScaleOnHitObstacle(new Vector3(1.5f, 1.5f, 1f)));
         }
         else
         {
