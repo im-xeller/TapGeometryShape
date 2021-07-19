@@ -9,11 +9,17 @@ public class Player : MonoBehaviour
 
     private ShapesList.Shapes _shape;
 
+    [SerializeField] private GameObject[] hearts;
+    private const int MaxLifes = 3;
+    private int _lifes;
+
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
         _shape = ShapesList.Shapes.Circle;
+
+        _lifes = MaxLifes;
     }
 
     private void Update()
@@ -43,13 +49,24 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(ChangeColorOnHitObstacle(Color.green));
             StartCoroutine(ChangeScaleOnHitObstacle(new Vector3(1.5f, 1.5f, 1f)));
-
-            obstacle.DestroyObstacle();
         }
         else
         {
-            SceneSwitch.Instance.LoadGameScene();
+            if (_lifes > 1)
+            {
+                _lifes--;
+                ResetHearts();
+
+                StartCoroutine(ChangeColorOnHitObstacle(Color.red));
+                StartCoroutine(ChangeScaleOnHitObstacle(new Vector3(0.5f, 0.5f, 1f)));
+            }
+            else
+            {
+                SceneSwitch.Instance.LoadGameScene();
+            }
         }
+
+        obstacle.DestroyObstacle();
     }
 
     private IEnumerator ChangeColorOnHitObstacle(Color newColor)
@@ -64,5 +81,17 @@ public class Player : MonoBehaviour
         transform.localScale = newScale;
         yield return new WaitForSeconds(0.15f);
         transform.localScale = new Vector3(1f, 1f, 1f);
+    }
+
+    private void ResetHearts()
+    {
+        if (_lifes == 2)
+        {
+            hearts[0].SetActive(false);
+        }
+        else if (_lifes == 1)
+        {
+            hearts[1].SetActive(false);
+        }
     }
 }
