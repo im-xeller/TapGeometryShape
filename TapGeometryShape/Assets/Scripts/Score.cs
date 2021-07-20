@@ -3,7 +3,8 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    [SerializeField] private Text scoreAmountHolder;
+    [SerializeField] private Text[] scoreAmountHolders;
+    [SerializeField] private Text bestScoreAmountHolder;
     private static int s_score;
     private static int s_bestScore;
 
@@ -24,7 +25,11 @@ public class Score : MonoBehaviour
 
     private void Update()
     {
-        scoreAmountHolder.text = s_score.ToString();
+        for (int i = 0; i < scoreAmountHolders.Length; i++)
+        {
+            scoreAmountHolders[i].text = s_score.ToString();
+        }
+        bestScoreAmountHolder.text = s_bestScore.ToString();
     }
 
     private void OnDestroy()

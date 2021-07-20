@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
     private const int MaxLifes = 3;
     private int _lifes;
 
+    [SerializeField] private GameObject[] componentsToDisableOnDeath;
+    [SerializeField] private GameObject deathMenu;
+
     private void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -19,6 +22,8 @@ public class Player : MonoBehaviour
         _shape = ShapesList.Shapes.Circle;
 
         _lifes = MaxLifes;
+
+        deathMenu.SetActive(false);
     }
 
     private void Update()
@@ -62,7 +67,14 @@ public class Player : MonoBehaviour
             }
             else
             {
-                SceneSwitch.Instance.LoadGameScene();
+                _spriteRenderer.enabled = false;
+
+                for (int i = 0; i < componentsToDisableOnDeath.Length; i++)
+                {
+                    componentsToDisableOnDeath[i].SetActive(false);
+                }
+
+                deathMenu.SetActive(true);
             }
         }
 
