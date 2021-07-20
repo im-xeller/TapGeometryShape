@@ -10,7 +10,7 @@ public class ObstaclesGeneration : MonoBehaviour
 
     private void Start()
     {
-        _spawnTime = 1.5f;
+        _spawnTime = 1f;
         StartCoroutine(CreateNewObstacle());
     }
 
